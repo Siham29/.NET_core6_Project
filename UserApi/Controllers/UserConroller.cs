@@ -8,61 +8,73 @@ namespace UserApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class UserConroller : ControllerBase
+
     {
+        private readonly IUserRepo _userRepo;
+
+        public UserConroller(IUserRepo userRepo)
+        {
+            _userRepo = userRepo;
+        }
 
         [HttpGet]
 
-        public ActionResult<List<User>> GetAll() {
-            return UserRepo.GetAll();
-        
-        
+        public ActionResult<List<User>> GetAll()
+        {
+            return _userRepo.GetAll();
+
+
         }
         [HttpGet("{id}")]
         public ActionResult<User> Get(int id)
         {
 
-            var user = UserRepo.Get(id);
-            if(user == null)
+            var user = _userRepo.Get(id);
+            if (user == null)
 
-                    return NotFound();
+                return NotFound();
             return user;
- 
+
         }
         [HttpDelete("{id}")]
 
         public ActionResult Deletet(int id)
         {
 
-            var user1 = UserRepo.Get(id);
+            var user1 = _userRepo.Get(id);
             if (user1 == null)
 
                 return NotFound();
-            UserRepo.delete(id);
+            _userRepo.delete(id);
             return Ok();
 
         }
         [HttpPost]
-        public ActionResult Create (User user)
+        public ActionResult CreateAndUpdate(User user)
         {
-            if (UserRepo.GetAll().Any(a => a.Id == user.Id))//check if the id is already exist
-            return BadRequest();    
-
-                UserRepo.add(user);
-            return Ok();
+            try
+            {
+                var model = _userRepo.AddAndUpdate(user);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
 
 
         }
-        [HttpPut]
-        public ActionResult Update(User user)
-        {
-            var E = UserRepo.Get(user.Id);
-            if (E == null)
-                return NotFound();
-            UserRepo.update(user.Id,user);
-            return Ok();
+        //[HttpPut]
+        //public ActionResult Update(User user)
+        //{
+        //    var E = _userRepo.Get(user.Id);
+        //    if (E == null)
+        //        return NotFound();
+        //    _userRepo.update(user.Id, user);
+        //    return Ok();
 
 
-        }
+        //}
 
     }
 }

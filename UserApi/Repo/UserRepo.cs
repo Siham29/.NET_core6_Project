@@ -1,53 +1,121 @@
-﻿using UserApi.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using UserApi.Models;
+using UserApi.ViewModels;
+
 namespace UserApi.Repo
 {
-    public class UserRepo
-    {
-        static List <User> Users { get; set; }
+    public class UserRepo:IUserRepo
+    {   
+       private  List <User> Users { get; set; }
+        private UserContext _context;
 
-        static UserRepo()
+        public UserRepo(UserContext context)
         {
 
-            Users = new List<User>()
-            {
+            _context = context;
 
-                new User() { Id = 1, FirstName = "Mohammad",LastName = "Abu rmaileh"  },
-                new User() { Id = 2, FirstName = "Osaid", LastName = "Abu rmaileh" }
-
-              };
-        }
-        public static List<User> GetAll() { 
-        return Users;
-        }
-        public static User Get(int id) {
-
-            return Users.FirstOrDefault(user => user.Id == id);
-        
-        }
-        public static void delete(int id)
-        {
-            var user1 =Get(id);
-            if (user1 != null)
-                Users.Remove(user1);
-
-
-
-        }
-        public static void add(User user) {
            
-
-
-            Users.Add(user);
+        }
         
+     
+        public List<User> GetAll() {
+            List<User> Users;
+            try
+            {
+                Users = _context.Set<User>().ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Users;
         }
-        public static void update(int id ,User user)
-        {
+        public User Get(int id) {
 
-            var index = Users.FindIndex(u => u.Id == user.Id);
-            if (index == -1)
-                return;
-            Users[index] = user;
+            User Users;
+            try
+            {
+                Users = _context.Find<User>(id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Users;
         }
+
+    
+        public ResponseModel delete(int id)
+        {
+            ResponseModel model = new ResponseModel();
+            try
+            {
+                User _temp = Get(id);
+                if (_temp != null)
+                {
+                    _context.Remove<User>(_temp);
+                    _context.SaveChanges();
+                    model.IsSuccess = true;
+                    model.Messsage = "User Deleted Successfully";
+                }
+                else
+                {
+                    model.IsSuccess = false;
+                    model.Messsage = "User Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                model.IsSuccess = false;
+                model.Messsage = "Error : " + ex.Message;
+            }
+            return model;
+        }
+        public ResponseModel AddAndUpdate(User user) {
+
+
+
+            ResponseModel model = new ResponseModel();
+            try
+            {
+                User _temp = Get(user.Id);
+                if (_temp != null)
+                {
+                   
+                    _temp.Id=user.Id;
+                    _temp.FirstName= user.FirstName;
+                    _temp.LastName= user.LastName;
+                    
+                    _context.Update<User>(_temp);
+                    model.Messsage = "User Update Successfully";
+                }
+                else
+                {
+                   
+                    _context.Add<User>(user);
+                    model.Messsage = "User Inserted Successfully";
+                }
+                
+                _context.SaveChanges();
+                model.IsSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                model.IsSuccess = false;
+                model.Messsage = "Error : " + ex.Message;
+            }
+            return model;
+        }
+
+    
+        //public  void update(int id ,User user)
+        //{
+
+        //    var index = Users.FindIndex(u => u.Id == user.Id);
+        //    if (index == -1)
+        //        return;
+        //    Users[index] = user; 
+        //}
 
     }
 

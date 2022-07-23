@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "aibHECrR6SB4fVHFbYT4KkoLVkJiOdNfp/+7qHMKulI=",
-  "Source": "EmployeeApi",
-  "BasePath": "_content/EmployeeApi",
+  "Hash": "SjSfFLzrmUX8LSr950XSJC3MWLA8ShDFLT5nOBLSh+4=",
+  "Source": "UserApi",
+  "BasePath": "_content/UserApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
