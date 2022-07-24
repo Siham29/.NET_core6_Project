@@ -50,12 +50,12 @@ namespace UserApi.Controllers
 
         }
         [HttpPost]
-        public ActionResult CreateAndUpdate(User user)
+        public ActionResult Create(User user)
         {
             try
             {
-                var model = _userRepo.AddAndUpdate(user);
-                return Ok(model);
+                _userRepo.Add(user);
+                return Ok();
             }
             catch (Exception)
             {
@@ -64,17 +64,17 @@ namespace UserApi.Controllers
 
 
         }
-        //[HttpPut]
-        //public ActionResult Update(User user)
-        //{
-        //    var E = _userRepo.Get(user.Id);
-        //    if (E == null)
-        //        return NotFound();
-        //    _userRepo.update(user.Id, user);
-        //    return Ok();
+        [HttpPut]
+        public ActionResult Update(User user)
+        {
+            var E = _userRepo.Get(user.Id);
+            if (E == null)
+                return NotFound();
+            _userRepo.Update( user);
+            return Ok();
 
 
-        //}
+            }
 
-    }
+        }
 }

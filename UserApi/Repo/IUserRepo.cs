@@ -8,10 +8,10 @@ namespace UserApi.Repo
     {
         public List<User> GetAll();
         public User Get(int id);
-        public ResponseModel delete(int id);
-        public ResponseModel AddAndUpdate(User user);
+        public void delete(int id);
+        public void Add(User user);
        
-       // public void update(int id, User user);
+        public void Update( User user);
      
      
 
