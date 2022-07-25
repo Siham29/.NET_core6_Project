@@ -23,7 +23,7 @@ namespace UserApi.Repo
             List<User> Users;
             try
             {
-                Users = _context.Set<User>().ToList();
+                Users = _context.Users.ToList();
             }
             catch (Exception)
             {
@@ -37,7 +37,7 @@ namespace UserApi.Repo
             User Users;
             try
             {
-                Users = _context.Find<User>(id);
+                Users = _context.Users.Find(id);
             }
             catch (Exception)
             {
@@ -54,7 +54,8 @@ namespace UserApi.Repo
             User _temp = Get(id);
             if (_temp != null)
             {
-                _context.Remove<User>(_temp);
+                _context.Users.Remove
+                    (_temp);
                 _context.SaveChanges();
 
 
@@ -64,7 +65,7 @@ namespace UserApi.Repo
         public void Add(User user)
         {
 
-            _context.Add<User>(user);
+            _context.Users.Add(user);
 
 
             _context.SaveChanges();
@@ -83,8 +84,101 @@ namespace UserApi.Repo
                 _temp.Id = user.Id;
                 _temp.FirstName = user.FirstName;
                 _temp.LastName = user.LastName;
+                _temp.Posts=user.Posts; 
 
-                _context.Update<User>(_temp);
+                _context.Users.Update(_temp);
+                _context.SaveChanges();
+
+            }
+
+
+        }
+
+    }
+
+
+
+    //--------------------------------------------------------------------------------------------------------------------
+
+    public class PostRepo : IPostRepo
+    {
+        private List<Post> Posts { get; set; }
+        private UserContext _context;
+
+        public PostRepo(UserContext context)
+        {
+
+            _context = context;
+                  }
+
+
+        public List<Post> GetAll()
+        {
+            List<Post> Posts;
+            try
+            {
+                Posts = _context.Posts.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Posts;
+        }
+        public Post Get(int id)
+        {
+
+            Post Posts;
+            try
+            {
+                Posts = _context.Posts.Find(id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Posts;
+        }
+
+
+        public void delete(int id)
+        {
+
+
+            Post _temp = Get(id);
+            if (_temp != null)
+            {
+                _context.Posts.Remove(_temp);
+                _context.SaveChanges();
+
+
+
+            }
+        }
+        public void Add(Post Posts)
+        {
+
+            _context.Posts.Add(Posts);
+
+
+            _context.SaveChanges();
+
+        }
+
+
+        public void Update(Post Posts)
+        {
+
+
+            Post _temp = Get(Posts.Id);
+            if (_temp != null)
+            {
+
+                _temp.Id = Posts.Id;
+                _temp.Title = Posts.Title;
+                _temp.User = Posts.User;
+
+                _context.Posts.Update(_temp);
                 _context.SaveChanges();
 
             }

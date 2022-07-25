@@ -13,6 +13,7 @@ builder.Services.AddDbContext<UserContext>(x => x.UseSqlServer(builder.Configura
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IPostRepo, PostRepo>();
 
 var app = builder.Build();
 

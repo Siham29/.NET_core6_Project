@@ -1,39 +1,39 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using UserApi.Repo;
 using UserApi.Models;
+using UserApi.Repo;
 
 namespace UserApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserConroller : ControllerBase
-
+    public class PostController : ControllerBase
     {
-        private readonly IUserRepo _userRepo;
 
-        public UserConroller(IUserRepo userRepo)
+        private readonly IPostRepo _postRepo;
+
+        public PostController(IPostRepo postRepo)
         {
-            _userRepo = userRepo;
+            _postRepo = postRepo;
         }
 
         [HttpGet]
 
-        public ActionResult<List<User>> GetAll()
+        public ActionResult<List<Post>> GetAll()
         {
-            return _userRepo.GetAll();
+            return _postRepo.GetAll();
 
 
         }
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        public ActionResult<Post> Get(int id)
         {
 
-            var user = _userRepo.Get(id);
-            if (user == null)
+            var post = _postRepo.Get(id);
+            if (post == null)
 
                 return NotFound();
-            return user;
+            return post;
 
         }
         [HttpDelete("{id}")]
@@ -41,20 +41,20 @@ namespace UserApi.Controllers
         public ActionResult Deletet(int id)
         {
 
-            var user1 = _userRepo.Get(id);
+            var user1 = _postRepo.Get(id);
             if (user1 == null)
 
                 return NotFound();
-            _userRepo.delete(id);
+            _postRepo.delete(id);
             return Ok();
 
         }
         [HttpPost]
-        public ActionResult Create([FromBody]User user)
+        public ActionResult Create([FromBody] Post post)
         {
             try
             {
-                _userRepo.Add(user);
+                _postRepo.Add(post);
                 return Ok();
             }
             catch (Exception)
@@ -65,16 +65,17 @@ namespace UserApi.Controllers
 
         }
         [HttpPut]
-        public ActionResult Update(User user)
+        public ActionResult Update(Post post)
         {
-            var E = _userRepo.Get(user.Id);
+            var E = _postRepo.Get(post.Id);
             if (E == null)
                 return NotFound();
-            _userRepo.Update( user);
+            _postRepo.Update(post);
             return Ok();
 
 
-            }
-
         }
+
+    
+}
 }
