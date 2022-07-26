@@ -67,9 +67,7 @@ namespace UserApi.Controllers
         [HttpPut]
         public ActionResult Update(User user)
         {
-            var E = _userRepo.Get(user.Id);
-            if (E == null)
-                return NotFound();
+           
             _userRepo.Update( user);
             return Ok();
 

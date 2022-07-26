@@ -64,9 +64,6 @@ namespace UserApi.Repo
 
         public T Update(T obj)
         {
-
-
-            
                 _context.Set<T>().Update(obj);
                 _context.SaveChanges();
             return obj;

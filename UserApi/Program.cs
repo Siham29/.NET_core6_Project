@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using UserApi;
 using UserApi.Models;
 using UserApi.Repo;
 
@@ -12,8 +13,7 @@ builder.Services.AddDbContext<UserContext>(x => x.UseSqlServer(builder.Configura
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IUserRepo, UserRepo>();
-builder.Services.AddScoped<IPostRepo, PostRepo>();
+builder.Services.InitServices();
 
 var app = builder.Build();
 
