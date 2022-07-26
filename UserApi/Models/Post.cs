@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UserApi.Repo;
 
 namespace UserApi.Models
 {
-    public class Post
+    public class Post:BaseModel
     {
-        [Key]
-        public int Id { get; set; }
-
+      
         public string Title { get; set; }
         [ForeignKey("User")]
         public int UserId { get; set; }

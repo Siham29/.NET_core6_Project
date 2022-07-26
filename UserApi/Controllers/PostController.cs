@@ -45,7 +45,7 @@ namespace UserApi.Controllers
             if (user1 == null)
 
                 return NotFound();
-            _postRepo.delete(id);
+            _postRepo.Delete(id);
             return Ok();
 
         }
