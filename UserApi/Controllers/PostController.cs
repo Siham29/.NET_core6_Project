@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using UserApi.Models;
 using UserApi.Repo;
 
 namespace UserApi.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
@@ -18,7 +21,7 @@ namespace UserApi.Controllers
         }
 
         [HttpGet]
-
+        [ActionFilter("Admin")]
         public ActionResult<List<Post>> GetAll()
         {
             return _postRepo.GetAll();
@@ -52,6 +55,7 @@ namespace UserApi.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] Post post)
         {
+           
             try
             {
                 _postRepo.Add(post);
