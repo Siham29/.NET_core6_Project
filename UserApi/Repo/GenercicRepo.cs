@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using UserApi.Models;
 
 namespace UserApi.Repo
@@ -7,8 +8,8 @@ namespace UserApi.Repo
     public interface IGenercicRepo<T> where T:class,IBaseModel
     {
 
-        public Task<List<T>>? GetAll();
-        public Task<T>? Get(int id);
+        public Task<List<TVM>>? GetAll<TVM>();
+        public Task<TVM>? Get<TVM>(int id) where TVM : class, IBaseModel;
         public Task Delete (int id);
         public Task<T> Add(T obj);
 
@@ -18,33 +19,32 @@ namespace UserApi.Repo
     public class GenercicRepo<T>: IGenercicRepo<T>  where T : class ,IBaseModel
     {
         public UserContext _context;
-
-        public GenercicRepo(UserContext context)
+        public IMapper _mapper;
+        public GenercicRepo(UserContext context, IMapper mapper)
         {
 
             _context = context;
+            _mapper = mapper;
 
 
         }
 
 
-        public async Task <List<T> >? GetAll()
+        public async Task <List<TVM>>? GetAll<TVM>() 
         {
-
-
-            return _context.Set<T>().ToList();
+            return _context.Set<T>().ProjectTo<TVM>(_mapper.ConfigurationProvider).ToList();
         }
-        public async Task <T> ? Get(int id)
+        public async Task <TVM> ? Get <TVM>(int id) where TVM : class, IBaseModel
         {
 
-              return   _context.Set<T>().Find(id);
+              return   _context.Set<T>().ProjectTo<TVM>(_mapper.ConfigurationProvider).FirstOrDefault(c => c.Id == id);
         }
 
 
         public async Task Delete (int id)
         {
-            var temp = _context.Set<T>().FirstOrDefaultAsync(c => c.Id == id);
-            _context.Set<T>().Remove(await temp);
+            var temp = await _context.Set<T>().FirstOrDefaultAsync(c => c.Id == id);
+            _context.Set<T>().Remove( temp);
             await _context.SaveChangesAsync();
 
 

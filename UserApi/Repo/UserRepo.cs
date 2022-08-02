@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using UserApi.Models;
 
 
@@ -6,14 +6,10 @@ namespace UserApi.Repo
 {
     public class UserRepo : GenercicRepo<User>, IUserRepo
     { 
-        public UserRepo(UserContext context) : base(context)
+        public UserRepo(UserContext context, IMapper mapper) : base(context, mapper)
         {
         }
-        public async Task < List<User>>? GetAll()
-        {
-            return _context.Users.Include(c => c.Posts).ToList();
-
-        }
+     
 
     }
 
@@ -23,13 +19,9 @@ namespace UserApi.Repo
 
     public class PostRepo : GenercicRepo<Post>, IPostRepo
     {
-        public PostRepo(UserContext context) : base(context)
+        public PostRepo(UserContext context, IMapper mapper) : base(context, mapper)
         {
         }
-        public async Task <List<Post>>? GetAll()
-        {
-            return _context.Posts.Include(c => c.User).ToList();
-
-        }
+       
     }
 }

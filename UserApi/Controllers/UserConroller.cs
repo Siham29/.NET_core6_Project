@@ -24,7 +24,7 @@ namespace UserApi.Controllers
         //[ActionFilter("Admin")]
         public async Task<ActionResult<List<UserViewModel>>> GetAll()
         {
-                  return _mapper.Map<List<UserViewModel>>(await _userRepo.GetAll());
+                  return _mapper.Map<List<UserViewModel>>(await _userRepo.GetAll<UserViewModel>());
 
 
 
@@ -33,11 +33,11 @@ namespace UserApi.Controllers
         public async Task<ActionResult<UserViewModel> >Get(int id)
         {
 
-            var user =await _userRepo.Get(id);
+            var user =await _userRepo.Get<UserViewModel>(id);
             if (user == null)
 
                 return NotFound();
-            return _mapper.Map<User,UserViewModel>(user);
+            return user;
 
         }
         [HttpDelete("{id}")]
@@ -45,11 +45,11 @@ namespace UserApi.Controllers
         public async Task< ActionResult> Deletet(int id)
         {
 
-            var user1 = await _userRepo.Get(id);
+            var user1 = await _userRepo.Get<UserViewModel>(id);
             if (user1 == null)
 
                 return NotFound();
-            _userRepo.Delete(id);
+            await _userRepo.Delete(id);
             return Ok();
 
         }

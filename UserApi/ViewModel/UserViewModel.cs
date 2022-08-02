@@ -1,8 +1,10 @@
-﻿namespace UserApi.ViewModel
+﻿using UserApi.Repo;
+
+namespace UserApi.ViewModel
 {
-    public class UserViewModel
+    public class UserViewModel:BaseModel
     {
-        public int Id { get; set; }
+        
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
