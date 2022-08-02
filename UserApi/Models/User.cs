@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using UserApi.Repo;
 
 namespace UserApi.Models
 {
-    public class User: BaseModel
+    public class User: IdentityUser<int>, IBaseModel
     {
         
 

@@ -3,9 +3,11 @@ using UserApi.Repo;
 using UserApi.Models;
 using AutoMapper;
 using UserApi.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UserApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserConroller : ControllerBase

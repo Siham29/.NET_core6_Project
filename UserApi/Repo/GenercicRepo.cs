@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using JWTAuthentication.NET6._0.Auth;
 using Microsoft.EntityFrameworkCore;
 using UserApi.Models;
 

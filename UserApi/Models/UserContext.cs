@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
-namespace UserApi.Models
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using UserApi.Models;
+
+namespace JWTAuthentication.NET6._0.Auth
 {
-    public class UserContext : DbContext
+    public class UserContext : IdentityDbContext<User,UserRoles,int>
     {
-        public UserContext(DbContextOptions options) : base(options) { }
+        public UserContext(DbContextOptions<UserContext> options) : base(options) { }
+
         public DbSet<User> Users
         {
             get;
@@ -14,6 +18,11 @@ namespace UserApi.Models
         {
             get;
             set;
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
         }
     }
 }

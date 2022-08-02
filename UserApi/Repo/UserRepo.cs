@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JWTAuthentication.NET6._0.Auth;
 using UserApi.Models;
 
 

@@ -10,7 +10,8 @@
         "dependencies": {
           "AutoMapper": "11.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "11.0.0",
-          "Microsoft.AspNet.Identity.EntityFramework": "2.2.3",
+          "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.7",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.7",
           "Microsoft.EntityFrameworkCore": "6.0.7",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.7",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.7",
@@ -62,18 +63,6 @@
           }
         }
       },
-      "EntityFramework/6.1.0": {
-        "runtime": {
-          "lib/net45/EntityFramework.SqlServer.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.1.30225.0"
-          },
-          "lib/net45/EntityFramework.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.1.30225.0"
-          }
-        }
-      },
       "Humanizer.Core/2.8.26": {
         "runtime": {
           "lib/netstandard2.0/Humanizer.dll": {
@@ -82,23 +71,45 @@
           }
         }
       },
-      "Microsoft.AspNet.Identity.Core/2.2.3": {
+      "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.7": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Protocols.OpenIdConnect": "6.21.0"
+        },
         "runtime": {
-          "lib/net45/Microsoft.AspNet.Identity.Core.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.2.3.11125"
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {
+            "assemblyVersion": "6.0.7.0",
+            "fileVersion": "6.0.722.32205"
           }
         }
       },
-      "Microsoft.AspNet.Identity.EntityFramework/2.2.3": {
+      "Microsoft.AspNetCore.Cryptography.Internal/6.0.7": {
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.722.32205"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Cryptography.KeyDerivation/6.0.7": {
         "dependencies": {
-          "EntityFramework": "6.1.0",
-          "Microsoft.AspNet.Identity.Core": "2.2.3"
+          "Microsoft.AspNetCore.Cryptography.Internal": "6.0.7"
         },
         "runtime": {
-          "lib/net45/Microsoft.AspNet.Identity.EntityFramework.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.2.3.11125"
+          "lib/net6.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.722.32205"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore/6.0.7": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "6.0.7",
+          "Microsoft.Extensions.Identity.Stores": "6.0.7"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {
+            "assemblyVersion": "6.0.7.0",
+            "fileVersion": "6.0.722.32205"
           }
         }
       },
@@ -269,6 +280,32 @@
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/6.0.0": {},
+      "Microsoft.Extensions.Identity.Core/6.0.7": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Cryptography.KeyDerivation": "6.0.7",
+          "Microsoft.Extensions.Logging": "6.0.0",
+          "Microsoft.Extensions.Options": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Identity.Core.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.722.32205"
+          }
+        }
+      },
+      "Microsoft.Extensions.Identity.Stores/6.0.7": {
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Identity.Core": "6.0.7",
+          "Microsoft.Extensions.Logging": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Identity.Stores.dll": {
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.722.32205"
+          }
+        }
+      },
       "Microsoft.Extensions.Logging/6.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "6.0.0",
@@ -1059,13 +1096,6 @@
       "path": "azure.core/1.25.0",
       "hashPath": "azure.core.1.25.0.nupkg.sha512"
     },
-    "EntityFramework/6.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-u/M0OEfqxTUsL5BwzD66eBGm278/ozqdLK3JvMO6QwUxxc+z7ZUkTYm4suDhWRqzkc6mOhvXDQY5dZUwbldxyQ==",
-      "path": "entityframework/6.1.0",
-      "hashPath": "entityframework.6.1.0.nupkg.sha512"
-    },
     "Humanizer.Core/2.8.26": {
       "type": "package",
       "serviceable": true,
@@ -1073,19 +1103,33 @@
       "path": "humanizer.core/2.8.26",
       "hashPath": "humanizer.core.2.8.26.nupkg.sha512"
     },
-    "Microsoft.AspNet.Identity.Core/2.2.3": {
+    "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Mv5FpoaxspE8hlWLE4r1IdZtovg/OyFgVRhxQbx47J4sqdLImN1hnM1lnwCj+/wLmqtqFk/RYMoZ5GAcwm/00g==",
-      "path": "microsoft.aspnet.identity.core/2.2.3",
-      "hashPath": "microsoft.aspnet.identity.core.2.2.3.nupkg.sha512"
+      "sha512": "sha512-gO4G2lp4//xoLsxuJ01BwQjaY5yuRzY+8UWXONDcz0dBBFeKSU10mIFWVae928DQCb9FuMgptWI1MpMkj3EbjQ==",
+      "path": "microsoft.aspnetcore.authentication.jwtbearer/6.0.7",
+      "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.6.0.7.nupkg.sha512"
     },
-    "Microsoft.AspNet.Identity.EntityFramework/2.2.3": {
+    "Microsoft.AspNetCore.Cryptography.Internal/6.0.7": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-dt4XZChjw3a6jE66Yd6LkF9omspxi0A9lJpwBZz8Wl1sabOS6dlLP1OOTVuUjtPaoAshjoIzvS6DFRQdPyq55g==",
-      "path": "microsoft.aspnet.identity.entityframework/2.2.3",
-      "hashPath": "microsoft.aspnet.identity.entityframework.2.2.3.nupkg.sha512"
+      "sha512": "sha512-BYqRUiLXtOfKNUj2Pt5kdvrKkVTgUAZvEL4kuBPMrczNtLq7z4zZH2nXXYD/h353ZHV0r1+jkl1PXrlxfIPYyg==",
+      "path": "microsoft.aspnetcore.cryptography.internal/6.0.7",
+      "hashPath": "microsoft.aspnetcore.cryptography.internal.6.0.7.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Cryptography.KeyDerivation/6.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iKQgXepVT2n98sheTQWhr/1EEzVspsVZKVL9GYhb8AIXw7J9fnJ2sLkS10SvwXlH9TP9vP3zOnOdW72O6g5lFg==",
+      "path": "microsoft.aspnetcore.cryptography.keyderivation/6.0.7",
+      "hashPath": "microsoft.aspnetcore.cryptography.keyderivation.6.0.7.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore/6.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Q5szSgXmOCgKXDFxxYGY3RHrOvNf4j60uVLrlMd98jP6lNii/3K2jeRuKn4UKEm/j94I4GjJyB+tmie/Bb0e9A==",
+      "path": "microsoft.aspnetcore.identity.entityframeworkcore/6.0.7",
+      "hashPath": "microsoft.aspnetcore.identity.entityframeworkcore.6.0.7.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
       "type": "package",
@@ -1205,6 +1249,20 @@
       "sha512": "sha512-xlzi2IYREJH3/m6+lUrQlujzX8wDitm4QGnUu6kUXTQAWPuZY8i+ticFJbzfqaetLA6KR/rO6Ew/HuYD+bxifg==",
       "path": "microsoft.extensions.dependencyinjection.abstractions/6.0.0",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Identity.Core/6.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-UDCKCQ+byNzbowlZwp+VWd02LbqNAtRNKK43xTxprdMkbfUonoMBTCtOnpW86pmVnNZo8SxclOxmOsX5heuAgA==",
+      "path": "microsoft.extensions.identity.core/6.0.7",
+      "hashPath": "microsoft.extensions.identity.core.6.0.7.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Identity.Stores/6.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/I+jLCCQvR+1LabnhQzc3HvJwkpHFpxk0+rW4SoB21s98YCsfdighh5/G3QJk9vLqHlIZYGxLn6pb4SEfXesDg==",
+      "path": "microsoft.extensions.identity.stores/6.0.7",
+      "hashPath": "microsoft.extensions.identity.stores.6.0.7.nupkg.sha512"
     },
     "Microsoft.Extensions.Logging/6.0.0": {
       "type": "package",

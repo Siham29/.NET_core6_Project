@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using UserApi.Models;
 using UserApi.Repo;
 using UserApi.ViewModel;
 
 namespace UserApi.Controllers
 {
-    
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostController : ControllerBase
