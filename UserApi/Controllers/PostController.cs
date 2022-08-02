@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using UserApi.Models;
 using UserApi.Repo;
+using UserApi.ViewModel;
 
 namespace UserApi.Controllers
 {
@@ -14,37 +14,40 @@ namespace UserApi.Controllers
     {
 
         private readonly IPostRepo _postRepo;
+        private readonly IMapper _mapper;
 
-        public PostController(IPostRepo postRepo)
+        public PostController(IPostRepo postRepo,IMapper mapper)
         {
             _postRepo = postRepo;
+            _mapper = mapper;   
         }
 
         [HttpGet]
-        [ActionFilter("Admin")]
-        public ActionResult<List<Post>> GetAll()
+        //[ActionFilter("Admin")]
+        public async Task<ActionResult<List<PostViewModel>>> GetAll()
         {
-            return _postRepo.GetAll();
+
+            return _mapper.Map<List<PostViewModel>>( await _postRepo.GetAll()) ;
 
 
         }
         [HttpGet("{id}")]
-        public ActionResult<Post> Get(int id)
+        public async Task<ActionResult<PostViewModel>> Get(int id)
         {
 
-            var post = _postRepo.Get(id);
+            var post =  await _postRepo.Get(id);
             if (post == null)
 
                 return NotFound();
-            return post;
+            return _mapper.Map<Post,PostViewModel>(post); ;
 
         }
         [HttpDelete("{id}")]
 
-        public ActionResult Deletet(int id)
+        public async Task<ActionResult> Deletet(int id)
         {
 
-            var user1 = _postRepo.Get(id);
+            var user1 = await _postRepo.Get(id);
             if (user1 == null)
 
                 return NotFound();
@@ -53,12 +56,14 @@ namespace UserApi.Controllers
 
         }
         [HttpPost]
-        public ActionResult Create([FromBody] Post post)
+        public async Task<ActionResult> Create([FromBody] PostViewModel post)
         {
            
             try
             {
-                _postRepo.Add(post);
+                var _post = _mapper.Map<Post>(post);
+             
+                await _postRepo.Add( _post);
                 return Ok();
             }
             catch (Exception)
@@ -69,10 +74,10 @@ namespace UserApi.Controllers
 
         }
         [HttpPut]
-        public ActionResult Update(Post post)
+        public async Task <ActionResult> Update(PostViewModel post)
         {
            
-            _postRepo.Update(post);
+           await _postRepo.Update(_mapper.Map<Post>(post));
             return Ok();
 
 

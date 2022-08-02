@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using UserApi;
 using UserApi.Models;
-using Microsoft.AspNetCore.Diagnostics;
+using System.Reflection;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<UserContext>(x => x.UseSqlServer(builder.Configura
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.InitServices();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
 var app = builder.Build();

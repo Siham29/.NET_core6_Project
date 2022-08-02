@@ -71,3 +71,5 @@ C:\Users\sosos\source\repos\UserApi\UserApi\bin\Debug\net6.0\EntityFramework.Sql
 C:\Users\sosos\source\repos\UserApi\UserApi\bin\Debug\net6.0\EntityFramework.dll
 C:\Users\sosos\source\repos\UserApi\UserApi\bin\Debug\net6.0\Microsoft.AspNet.Identity.Core.dll
 C:\Users\sosos\source\repos\UserApi\UserApi\bin\Debug\net6.0\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\sosos\source\repos\UserApi\UserApi\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\sosos\source\repos\UserApi\UserApi\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

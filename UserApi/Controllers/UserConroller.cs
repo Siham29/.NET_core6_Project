@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using UserApi.Repo;
 using UserApi.Models;
+using AutoMapper;
+using UserApi.ViewModel;
 
 namespace UserApi.Controllers
 {
@@ -11,37 +12,40 @@ namespace UserApi.Controllers
 
     {
         private readonly IUserRepo _userRepo;
+        private readonly IMapper _mapper;
 
-        public UserConroller(IUserRepo userRepo)
+        public UserConroller(IUserRepo userRepo, IMapper mapper)
         {
             _userRepo = userRepo;
+            _mapper = mapper;
         }
 
         [HttpGet]
-
-        public ActionResult<List<User>> GetAll()
+        //[ActionFilter("Admin")]
+        public async Task<ActionResult<List<UserViewModel>>> GetAll()
         {
-            return _userRepo.GetAll();
+                  return _mapper.Map<List<UserViewModel>>(await _userRepo.GetAll());
+
 
 
         }
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        public async Task<ActionResult<UserViewModel> >Get(int id)
         {
 
-            var user = _userRepo.Get(id);
+            var user =await _userRepo.Get(id);
             if (user == null)
 
                 return NotFound();
-            return user;
+            return _mapper.Map<User,UserViewModel>(user);
 
         }
         [HttpDelete("{id}")]
 
-        public ActionResult Deletet(int id)
+        public async Task< ActionResult> Deletet(int id)
         {
 
-            var user1 = _userRepo.Get(id);
+            var user1 = await _userRepo.Get(id);
             if (user1 == null)
 
                 return NotFound();
@@ -50,11 +54,14 @@ namespace UserApi.Controllers
 
         }
         [HttpPost]
-        public ActionResult Create([FromBody]User user)
+        public async Task <ActionResult> Create([FromBody] UserViewModel user)
         {
+
             try
             {
-                _userRepo.Add(user);
+                var _user = _mapper.Map<User>(user);
+                
+                await _userRepo.Add( _user);
                 return Ok();
             }
             catch (Exception)
@@ -63,12 +70,13 @@ namespace UserApi.Controllers
             }
 
 
+
         }
         [HttpPut]
-        public ActionResult Update(User user)
+        public async Task <ActionResult >Update(UserViewModel user)
         {
            
-            _userRepo.Update( user);
+            _userRepo.Update(_mapper.Map<User>(user));
             return Ok();
 
 
