@@ -40,6 +40,7 @@ namespace JWTAuthentication.NET6._0.Controllers
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("UserId", user.Id.ToString())
                 };
 
                 foreach (var userRole in userRoles)
@@ -52,7 +53,8 @@ namespace JWTAuthentication.NET6._0.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    expiration = token.ValidTo,
+                    Id= new Claim("User Id", user.Id.ToString())
                 });
             }
             return Unauthorized();
@@ -77,6 +79,7 @@ namespace JWTAuthentication.NET6._0.Controllers
 
             
             };
+            
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });

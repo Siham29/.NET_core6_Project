@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using JWTAuthentication.NET6._0.Auth;
+using JWTAuthentication.NET6._0.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using JWTAuthentication.NET6._0.Controllers;
 using UserApi.Models;
 using UserApi.Repo;
 using UserApi.ViewModel;
+using System.Security.Claims;
 
 namespace UserApi.Controllers
 {
@@ -61,17 +64,13 @@ namespace UserApi.Controllers
         public async Task<ActionResult> Create([FromBody] PostViewModel post)
         {
            
-            try
-            {
+       
                 var _post = _mapper.Map<Post>(post);
-             
+                var userId = User.Claims?.SingleOrDefault(p => p.Type == "UserId")?.Value;
+               _post.UserId= Convert.ToInt32(userId);
                 await _postRepo.Add( _post);
                 return Ok();
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+            
 
 
         }
