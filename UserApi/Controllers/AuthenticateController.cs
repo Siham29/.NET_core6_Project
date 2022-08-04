@@ -71,8 +71,11 @@ namespace JWTAuthentication.NET6._0.Controllers
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username,
-                FirstName="Siham",
-                LastName="Abu Remaileh"
+                FirstName = "Siham",
+                LastName = "Abu Remaileh",
+                
+
+            
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)

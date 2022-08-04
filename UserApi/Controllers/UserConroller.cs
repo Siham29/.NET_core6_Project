@@ -4,6 +4,7 @@ using UserApi.Models;
 using AutoMapper;
 using UserApi.ViewModel;
 using Microsoft.AspNetCore.Authorization;
+using JWTAuthentication.NET6._0.Auth;
 
 namespace UserApi.Controllers
 {

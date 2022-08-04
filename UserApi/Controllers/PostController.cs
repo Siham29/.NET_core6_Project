@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JWTAuthentication.NET6._0.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserApi.Models;
@@ -26,6 +27,7 @@ namespace UserApi.Controllers
         //[ActionFilter("Admin")]
         public async Task<ActionResult<List<PostViewModel>>> GetAll()
         {
+
 
             return _mapper.Map<List<PostViewModel>>( await _postRepo.GetAll<PostViewModel>()) ;
 

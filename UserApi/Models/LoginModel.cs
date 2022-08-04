@@ -10,4 +10,5 @@ namespace JWTAuthentication.NET6._0.Auth
         [Required(ErrorMessage = "Password is required")]
         public string? Password { get; set; }
     }
+
 }
