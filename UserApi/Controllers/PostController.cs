@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using JWTAuthentication.NET6._0.Auth;
-using JWTAuthentication.NET6._0.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using JWTAuthentication.NET6._0.Controllers;
 using UserApi.Models;
 using UserApi.Repo;
 using UserApi.ViewModel;
-using System.Security.Claims;
+
 
 namespace UserApi.Controllers
 {
@@ -25,14 +22,24 @@ namespace UserApi.Controllers
             _postRepo = postRepo;
             _mapper = mapper;   
         }
-
         [HttpGet]
         //[ActionFilter("Admin")]
         public async Task<ActionResult<List<PostViewModel>>> GetAll()
         {
 
 
-            return _mapper.Map<List<PostViewModel>>( await _postRepo.GetAll<PostViewModel>()) ;
+            return _mapper.Map<List<PostViewModel>>(await _postRepo.GetAll<PostViewModel>());
+
+
+        }
+
+        [HttpGet("page")]
+        //[ActionFilter("Admin")]
+        public async Task<ActionResult<List<Post>>> GetBySearch(int page, int size, String title)
+        {
+
+
+            return await _postRepo.Search(page, size, title) ;
 
 
         }

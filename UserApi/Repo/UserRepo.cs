@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JWTAuthentication.NET6._0.Auth;
+
 using UserApi.Models;
 
 
@@ -23,6 +24,10 @@ namespace UserApi.Repo
         public PostRepo(UserContext context, IMapper mapper) : base(context, mapper)
         {
         }
-       
+        public async Task<List<Post>>? Search(int page,int size,String title)
+        {
+            return _context.Posts.Skip(page * size).Take(size).Where(c =>c.Title.Contains(title)).ToList();
+        }
+
     }
 }
