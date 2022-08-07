@@ -63,8 +63,10 @@ namespace UserApi.Controllers
             try
             {
                 var _user = _mapper.Map<User>(user);
+                var userId = User.Claims?.SingleOrDefault(p => p.Type == "UserId")?.Value;
                 
-                await _userRepo.Add( _user);
+
+                await _userRepo.Add( _user, Convert.ToInt32(userId));
                 return Ok();
             }
             catch (Exception)
@@ -78,8 +80,8 @@ namespace UserApi.Controllers
         [HttpPut]
         public async Task <ActionResult >Update(UserViewModel user)
         {
-           
-            _userRepo.Update(_mapper.Map<User>(user));
+            var userId = User.Claims?.SingleOrDefault(p => p.Type == "UserId")?.Value;
+            _userRepo.Update(_mapper.Map<User>(user), Convert.ToInt32(userId));
             return Ok();
 
 

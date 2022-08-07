@@ -75,7 +75,7 @@ namespace UserApi.Controllers
                 var _post = _mapper.Map<Post>(post);
                 var userId = User.Claims?.SingleOrDefault(p => p.Type == "UserId")?.Value;
                _post.UserId= Convert.ToInt32(userId);
-                await _postRepo.Add( _post);
+                await _postRepo.Add( _post, Convert.ToInt32(userId));
                 return Ok();
             
 
@@ -84,8 +84,9 @@ namespace UserApi.Controllers
         [HttpPut]
         public async Task <ActionResult> Update(PostViewModel post)
         {
-           
-           await _postRepo.Update(_mapper.Map<Post>(post));
+            var userId = User.Claims?.SingleOrDefault(p => p.Type == "UserId")?.Value;
+
+            await _postRepo.Update(_mapper.Map<Post>(post), Convert.ToInt32(userId));
             return Ok();
 
 

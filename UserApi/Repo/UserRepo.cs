@@ -26,7 +26,7 @@ namespace UserApi.Repo
         }
         public async Task<List<Post>>? Search(int page,int size,String title)
         {
-            return _context.Posts.Skip(page * size).Take(size).Where(c =>c.Title.Contains(title)).ToList();
+            return _context.Posts.Where(c => c.Title.Contains(title)).Skip(page * size).Take(size).ToList();
         }
 
     }
